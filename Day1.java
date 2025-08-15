@@ -1,26 +1,55 @@
-//sort an Array 0s,1s,2s
+//sort an array 0s,1s,2s
 
-class Solution {
-    public void sortZeroOneTwo(int[] nums) {
-        int n=nums.length;
-       int low=0 ,mid=0,high=n-1;
-      while (mid <= high) {
-            if (nums[mid] == 0) {
-                // Swap nums[low] and nums[mid]
-                int temp = nums[low];
-                nums[low] = nums[mid];
-                nums[mid] = temp;
-                low++;
+package DPC;
+import java.util.*;
+public class Day1 {
+    static void sort012(int[] arr) {
+        int n = arr.length;
+        
+        // initialize three pointers:
+        // lo: boundary for 0s
+        // mid: current element being checked
+        // hi: boundary for 2s
+        int lo = 0;
+        int mid = 0;
+        int hi = n - 1;
+        
+        // process elements until mid crosses hi
+        while (mid <= hi) {
+            if (arr[mid] == 0) {
+                
+                // current is 0: swap with lo and move both 
+                // pointers forward
+                int temp = arr[lo];
+                arr[lo++] = arr[mid];
+                arr[mid++] = temp;
+            }
+            else if (arr[mid] == 1) {
+                // current is 1: it's already in correct position
                 mid++;
-            } else if (nums[mid] == 1) {
-                mid++;
-            } else { // nums[mid] == 2
-                // Swap nums[mid] and nums[high]
-                int temp = nums[mid];
-                nums[mid] = nums[high];
-                nums[high] = temp;
-                high--;
+            }
+            else {
+                // current is 2: swap with hi and move hi backward
+                // do not increment mid, as swapped value needs
+                // to be re-checked
+                int temp = arr[mid];
+                arr[mid] = arr[hi];
+                arr[hi--] = temp;
+            }
         }
-       } 
+    }
+
+    public static void main(String[] args) {
+        int[] arr = { 0, 1, 2, 1, 0, 2, 1, 0};
+        int n = arr.length;
+
+        // sort the array in-place
+        sort012(arr);
+
+        for (int i = 0; i < n; i++)
+            System.out.print(arr[i] + " ");
     }
 }
+
+OUTPUT:
+0 0 0 1 1 1 2 2 
